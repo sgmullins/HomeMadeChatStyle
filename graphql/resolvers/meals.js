@@ -1,6 +1,6 @@
 const Meal = require('../../models/Meal');
 const checkAuth = require('../../utils/check-auth');
-const { AuthenticationError } = require('apollo-server');
+const { AuthenticationError, UserInputError } = require('apollo-server');
 
 module.exports = {
   Query: {
@@ -43,6 +43,9 @@ module.exports = {
         username: user.username,
         madeDate: new Date().toISOString(),
       });
+      context.pubsub.publish('MEAL_ADDED', {
+        mealAdded: newMeal,
+      });
       return newMeal;
     },
     async deleteMeal(_, { mealId }, context) {
@@ -58,6 +61,31 @@ module.exports = {
       } catch (err) {
         throw new Error(err);
       }
+    },
+    async likeMeal(_, { mealId }, context) {
+      const { username } = checkAuth(context);
+      const meal = await Meal.findById(mealId);
+
+      if (meal) {
+        //if there is a meal and the meal's likes already has a username equal to the person logged in, remove the like
+        if (meal.likes.find(like => like.username === username)) {
+          //meal already liked
+          meal.likes = meal.likes.filter(like => like.username !== username);
+        } else {
+          //not liked like post
+          meal.likes.push({
+            username,
+            createdAt: new Date().toISOString(),
+          });
+        }
+        await meal.save();
+        return meal;
+      } else throw new UserInputError('Meal not found');
+    },
+  },
+  Subscription: {
+    mealAdded: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('MEAL_ADDED'),
     },
   },
 };
