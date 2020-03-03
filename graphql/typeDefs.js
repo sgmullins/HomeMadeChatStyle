@@ -10,6 +10,7 @@ module.exports = gql`
     madeDate: String!
     comments: [Comment]!
     likes: [Like]!
+    amount: Int!
     likeCount: Int!
     commentCount: Int!
   }
@@ -55,6 +56,7 @@ module.exports = gql`
     createComment(mealId: ID!, body: String!): Meal!
     deleteComment(mealId: ID!, commentId: ID!): Meal!
     likeMeal(mealId: ID!): Meal!
+    purchaseMeal(mealId: ID!): Meal!
   }
   # subscription example
   type Subscription {

@@ -33,7 +33,6 @@ const MealSchema = new Schema({
   },
   amount: {
     type: Number,
-    min: 1,
     required: true,
   },
   price: {

@@ -19,7 +19,7 @@ module.exports = {
         meal.comments.unshift({
           body,
           username,
-          createAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
         });
         await meal.save();
         return meal;

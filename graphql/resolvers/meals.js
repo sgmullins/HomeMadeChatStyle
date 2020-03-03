@@ -82,6 +82,21 @@ module.exports = {
         return meal;
       } else throw new UserInputError('Meal not found');
     },
+    async purchaseMeal(_, { mealId }, context) {
+      //only the decrementing part of purchases
+      const { username } = checkAuth(context);
+      const meal = await Meal.findById(mealId);
+
+      if (meal) {
+        if (meal.amount > 0) {
+          meal.amount -= 1;
+        } else {
+          throw new Error('There are no more meals remaining');
+        }
+        await meal.save();
+        return meal;
+      } else throw new UserInputError('Meal not found');
+    },
   },
   Subscription: {
     mealAdded: {

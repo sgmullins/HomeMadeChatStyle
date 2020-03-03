@@ -57,13 +57,19 @@ module.exports = {
       }
       const user = await User.findOne({ username });
       if (!user) {
-        errors.general = 'User not Found';
-        throw new UserInputError('Invalid credentials', { errors });
+        throw new UserInputError('Invalid credentials', {
+          errors: {
+            general: 'User not Found',
+          },
+        });
       }
       const matchPasswords = bcrypt.compareSync(password, user.password);
       if (!matchPasswords) {
-        errors.general = 'Invalid Creds';
-        throw new UserInputError('Invalid credentials');
+        throw new UserInputError('Invalid credentials', {
+          errors: {
+            general: 'Invalid Creds',
+          },
+        });
       }
       const token = createToken(user);
       return {
