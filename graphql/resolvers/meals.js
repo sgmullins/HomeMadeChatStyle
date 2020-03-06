@@ -1,6 +1,7 @@
 const Meal = require('../../models/Meal');
 const checkAuth = require('../../utils/check-auth');
 const { AuthenticationError, UserInputError } = require('apollo-server');
+const { validateMealCreationInputs } = require('../../utils/validators');
 
 module.exports = {
   Query: {
@@ -33,7 +34,15 @@ module.exports = {
     ) {
       //validate the request headers
       const user = checkAuth(context);
-      //Create a new meal. user is coming from the checkAuth(context) function.
+      const { valid, errors } = validateMealCreationInputs(
+        title,
+        category,
+        description,
+        amount,
+      );
+      if (!valid) {
+        throw new UserInputError('Errors', { errors });
+      }
       const newMeal = await Meal.create({
         title,
         category,

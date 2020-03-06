@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, Image, Icon, Label, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { AuthContext } from '../context/auth';
+import LikeButton from '../components/LikeButton';
 
 function MealCard({
   meal: {
@@ -17,12 +19,7 @@ function MealCard({
     likes,
   },
 }) {
-  const likePost = () => {
-    console.log('like post');
-  };
-  const commentOnMeal = () => {
-    console.log('comment');
-  };
+  const { user } = useContext(AuthContext);
 
   return (
     <Card fluid>
@@ -43,15 +40,8 @@ function MealCard({
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button as='div' labelPosition='right' onClick={likePost}>
-          <Button color='red' basic>
-            <Icon name='heart' style={{ fontSize: '20px' }} />
-          </Button>
-          <Label basic color='red' pointing='left'>
-            {likeCount}
-          </Label>
-        </Button>
-        <Button as='div' labelPosition='right' onClick={commentOnMeal}>
+        <LikeButton meal={{ id, likeCount, likes, username }} user={user} />
+        <Button labelPosition='right' as={Link} to={`/meals/${id}`}>
           <Button color='blue' basic>
             <Icon name='comments' style={{ fontSize: '20px' }} />
           </Button>
@@ -59,6 +49,16 @@ function MealCard({
             {commentCount}
           </Label>
         </Button>
+        {user && user.username === username && (
+          <Button
+            as='div'
+            color='red'
+            onClick={() => console.log('delete')}
+            floated='right'
+          >
+            <Icon name='trash' style={{ margin: 0 }} />
+          </Button>
+        )}
         {/* <Button as='div' labelPosition='left' floated='right'>
           <Label basic color='green' pointing='right'>
             Buy

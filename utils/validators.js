@@ -41,3 +41,29 @@ module.exports.validateUserLoginInputs = (username, password) => {
     valid: Object.keys(errors).length < 1,
   };
 };
+
+module.exports.validateMealCreationInputs = (
+  title,
+  category,
+  description,
+  amount,
+) => {
+  const errors = {};
+
+  if (title.trim() === '') {
+    errors.title = 'Title must not be empty';
+  }
+  if (category.trim() === '') {
+    errors.category = 'Category field must not be empty';
+  }
+  if (description.trim() === '') {
+    errors.description = 'Description field must not be empty';
+  }
+  if (amount === '') {
+    errors.amount = 'Amount field must not be empty';
+  }
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
