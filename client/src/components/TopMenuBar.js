@@ -14,8 +14,21 @@ function TopMenuBar() {
 
   const topMenuBar = context.user ? (
     <Menu pointing secondary size='massive' color='teal'>
-      <Menu.Item name={context.user.username} active as={Link} to='/' />
+      <Menu.Item
+        name={context.user.username}
+        as={Link}
+        to='/'
+        onClick={handleItemClick}
+      />
+      {context.user.joinDate}
       <Menu.Menu position='right'>
+        <Menu.Item
+          name='profile'
+          active={activeItem === 'profile'}
+          as={Link}
+          to='/profile'
+          onClick={handleItemClick}
+        />
         <Menu.Item name='logout' onClick={context.logout} />
       </Menu.Menu>
     </Menu>

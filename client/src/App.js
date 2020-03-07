@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import SingleMeal from './pages/SingleMeal';
 import TopMenuBar from './components/TopMenuBar';
-
+import Profile from './pages/Profile';
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
@@ -20,6 +20,7 @@ function App() {
         <Container>
           <TopMenuBar />
           <Route exact path='/' component={Home} />
+          <Route exact path='/profile' component={Profile} />
           <AuthRoute exact path='/login' component={Login} />
           <AuthRoute exact path='/register' component={Register} />
           <Route exact path={'/meals/:mealId'} component={SingleMeal} />

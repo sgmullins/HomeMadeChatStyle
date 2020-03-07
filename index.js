@@ -19,15 +19,20 @@ const server = new ApolloServer({
     }, 
     loaders: loaders()
 
-    then in resolver ctx.models.project
+    then in resolver ctx.models.projectß
   }
   */
   context: ({ req }) => ({ req, pubsub }),
 });
 
-const port = 5000;
+const port = process.env.port || 5000;
 // The `listen` method launches a web server.
-server.listen({ port }).then(({ url }) => {
-  connectDB();
-  console.log(`🚀  Server ready at ${url}`);
-});
+server
+  .listen({ port })
+  .then(({ url }) => {
+    connectDB();
+    console.log(`🚀  Server ready at ${url}`);
+  })
+  .catch(err => {
+    console.error(err);
+  });
