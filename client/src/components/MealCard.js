@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import LikeButton from '../components/LikeButton';
+import DeleteMealButton from '../components/DeleteMealButton';
+import PopupUtil from '../utils/PopupUtil';
 
 function MealCard({
   meal: {
@@ -41,24 +43,18 @@ function MealCard({
       </Card.Content>
       <Card.Content extra>
         <LikeButton meal={{ id, likeCount, likes, username }} user={user} />
-        <Button labelPosition='right' as={Link} to={`/meals/${id}`}>
-          <Button color='blue' basic>
-            <Icon name='comments' style={{ fontSize: '20px' }} />
+        <PopupUtil content='Comment on Meal'>
+          <Button labelPosition='right' as={Link} to={`/meals/${id}`}>
+            <Button color='blue' basic>
+              <Icon name='comments' style={{ fontSize: '20px' }} />
+            </Button>
+            <Label basic color='blue' pointing='left'>
+              {commentCount}
+            </Label>
           </Button>
-          <Label basic color='blue' pointing='left'>
-            {commentCount}
-          </Label>
-        </Button>
-        {user && user.username === username && (
-          <Button
-            as='div'
-            color='red'
-            onClick={() => console.log('delete')}
-            floated='right'
-          >
-            <Icon name='trash' style={{ margin: 0 }} />
-          </Button>
-        )}
+        </PopupUtil>
+
+        {user && user.username === username && <DeleteMealButton mealId={id} />}
         {/* <Button as='div' labelPosition='left' floated='right'>
           <Label basic color='green' pointing='right'>
             Buy

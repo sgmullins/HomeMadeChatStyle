@@ -10,6 +10,18 @@ const pubsub = new PubSub();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  /* can/should place our models here in context as it makes testing easier, you would be able 
+  to remove the import at the top of resolvers file and just pass context on the resolvers that need it
+  ex. context: {
+    models: {
+      project: project.models
+      task: task.models
+    }, 
+    loaders: loaders()
+
+    then in resolver ctx.models.project
+  }
+  */
   context: ({ req }) => ({ req, pubsub }),
 });
 

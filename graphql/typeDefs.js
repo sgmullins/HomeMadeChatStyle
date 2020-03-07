@@ -1,5 +1,5 @@
 const { gql } = require('apollo-server');
-
+//TODO: turn the category field into an enum of Breakfast lunch dinner allday....
 module.exports = gql`
   type Meal {
     id: ID!

@@ -7,6 +7,7 @@ import AuthRoute from './utils/AuthRoute';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import SingleMeal from './pages/SingleMeal';
 import TopMenuBar from './components/TopMenuBar';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -21,6 +22,7 @@ function App() {
           <Route exact path='/' component={Home} />
           <AuthRoute exact path='/login' component={Login} />
           <AuthRoute exact path='/register' component={Register} />
+          <Route exact path={'/meals/:mealId'} component={SingleMeal} />
         </Container>
       </Router>
     </AuthProvider>
