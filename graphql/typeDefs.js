@@ -31,6 +31,8 @@ module.exports = gql`
     token: String!
     username: String!
     joinDate: String!
+    favorites: [Meal]!
+    purchases: [Meal]!
   }
   input RegisterInput {
     username: String!
@@ -47,6 +49,7 @@ module.exports = gql`
   type Query {
     getAllMeals: [Meal]!
     getMeal(mealId: ID!): Meal
+    getCurrentUser(userId: ID!): User!
   }
   type Mutation {
     registerUser(registerInput: RegisterInput): User

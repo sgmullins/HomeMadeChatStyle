@@ -9,6 +9,24 @@ const {
 const createToken = require('../../utils/tokenCreation');
 
 module.exports = {
+  Query: {
+    async getCurrentUser(_, { userId }, context) {
+      try {
+        const currentUser = await await User.findById(userId).populate({
+          path: 'favorites',
+          model: 'Meal',
+        });
+        console.log('current user from resolver', currentUser);
+        if (currentUser) {
+          return currentUser;
+        } else {
+          throw new Error('User not found from user resolver');
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+  },
   Mutation: {
     async registerUser(
       _,
@@ -72,6 +90,7 @@ module.exports = {
         });
       }
       const token = createToken(user);
+      console.log('from login mutation', user);
       return {
         ...user._doc,
         id: user._id,

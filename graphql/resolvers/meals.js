@@ -1,4 +1,5 @@
 const Meal = require('../../models/Meal');
+const User = require('../../models/User');
 const checkAuth = require('../../utils/check-auth');
 const { AuthenticationError, UserInputError } = require('apollo-server');
 const { validateMealCreationInputs } = require('../../utils/validators');
@@ -74,6 +75,10 @@ module.exports = {
     async likeMeal(_, { mealId }, context) {
       const { username } = checkAuth(context);
       const meal = await Meal.findById(mealId);
+      const user = await User.findOneAndUpdate(
+        { username },
+        { $addToSet: { favorites: mealId } },
+      );
 
       if (meal) {
         //if there is a meal and the meal's likes already has a username equal to the person logged in, remove the like

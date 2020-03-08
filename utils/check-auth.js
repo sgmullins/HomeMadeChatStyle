@@ -10,6 +10,7 @@ const checkAuth = context => {
     if (token) {
       try {
         const user = jwt.verify(token, process.env.SECRET_KEY);
+        console.log('user from auth context', user);
         return user;
       } catch (err) {
         throw new AuthenticationError('Invalid or expired token ');

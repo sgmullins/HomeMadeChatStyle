@@ -4,6 +4,7 @@ const commentResolvers = require('./comments');
 
 module.exports = {
   // this is a bit of a modifier, it will take the parent(the mutation being run) and anytime something goes through it will run these modifiers and return options
+  //parent here is meal since a meal is what returns from the first resolver
   Meal: {
     likeCount(parent) {
       // console.log(parent)
@@ -13,6 +14,7 @@ module.exports = {
   },
   Query: {
     ...mealResolvers.Query,
+    ...userResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,
