@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import gql from 'graphql-tag';
+import { GET_CURRENT_USER_QUERY } from '../utils/graphqlQueries';
 
 import { AuthContext } from '../context/auth';
 
 export default function Profile() {
   const context = useContext(AuthContext);
   const userId = context.user.id;
+
   const { loading, error, data } = useQuery(GET_CURRENT_USER_QUERY, {
     variables: {
       userId,
@@ -35,19 +37,3 @@ export default function Profile() {
     </div>
   );
 }
-
-const GET_CURRENT_USER_QUERY = gql`
-  query getCurrentUser($userId: ID!) {
-    getCurrentUser(userId: $userId) {
-      id
-      username
-      email
-      joinDate
-      favorites {
-        id
-        title
-        category
-      }
-    }
-  }
-`;

@@ -63,3 +63,19 @@ export const ADD_COMMENT_MUTATION = gql`
     }
   }
 `;
+
+export const GET_CURRENT_USER_QUERY = gql`
+  query getCurrentUser($userId: ID!) {
+    getCurrentUser(userId: $userId) {
+      id
+      username
+      email
+      joinDate
+      favorites {
+        id
+        title
+        category
+      }
+    }
+  }
+`;

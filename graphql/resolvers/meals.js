@@ -75,15 +75,15 @@ module.exports = {
     async likeMeal(_, { mealId }, context) {
       const { username } = checkAuth(context);
       const meal = await Meal.findById(mealId);
-      const user = await User.findOneAndUpdate(
-        { username },
-        { $addToSet: { favorites: mealId } },
-      );
 
       if (meal) {
         //if there is a meal and the meal's likes already has a username equal to the person logged in, remove the like
         if (meal.likes.find(like => like.username === username)) {
           //meal already liked
+          await User.findOneAndUpdate(
+            { username },
+            { $pull: { favorites: mealId } },
+          );
           meal.likes = meal.likes.filter(like => like.username !== username);
         } else {
           //not liked like post
@@ -91,6 +91,10 @@ module.exports = {
             username,
             createdAt: new Date().toISOString(),
           });
+          await User.findOneAndUpdate(
+            { username },
+            { $addToSet: { favorites: mealId } },
+          );
         }
         await meal.save();
         return meal;

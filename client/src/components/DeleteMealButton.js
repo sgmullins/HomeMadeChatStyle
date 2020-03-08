@@ -21,6 +21,7 @@ function DeleteMealButton({ mealId, commentId, callback }) {
         const data = proxy.readQuery({
           query: FETCH_MEALS_QUERY,
         });
+        console.log(data);
         proxy.writeQuery({
           query: FETCH_MEALS_QUERY,
           data: {

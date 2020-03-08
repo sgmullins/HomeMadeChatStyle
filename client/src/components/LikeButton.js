@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { Icon, Label, Button } from 'semantic-ui-react';
 import PopupUtil from '../utils/PopupUtil';
+import { GET_CURRENT_USER_QUERY } from '../utils/graphqlQueries';
 
 function LikeButton({ user, meal: { likeCount, likes, id, username } }) {
   const [liked, setLiked] = useState(false);
