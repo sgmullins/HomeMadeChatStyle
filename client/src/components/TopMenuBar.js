@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
+import CartDropdown from './CartDropdown';
 import { AuthContext } from '../context/auth';
 
 function TopMenuBar() {
@@ -9,18 +10,30 @@ function TopMenuBar() {
   const pathname = window.location.pathname;
   const path = pathname === '/' ? 'home' : pathname.substr(1);
   const [activeItem, setActiveItem] = useState(path);
+  const [hidden, setHidden] = useState(true);
 
-  const handleItemClick = (e, { name }) => setActiveItem(name);
+  const handleItemClick = (e, { name }) => {
+    setActiveItem(name);
+    if (name === 'cart') {
+      setHidden(!hidden);
+    }
+    if (name !== 'cart') {
+      setHidden(true);
+    }
+    if (name === 'cart' && hidden === false) {
+      setActiveItem(context.user.username);
+    }
+  };
 
   const topMenuBar = context.user ? (
     <Menu pointing secondary size='massive' color='teal'>
       <Menu.Item
         name={context.user.username}
+        active={activeItem === context.user.username}
         as={Link}
         to='/'
         onClick={handleItemClick}
       />
-      {context.user.joinDate}
       <Menu.Menu position='right'>
         <Menu.Item
           name='profile'
@@ -30,7 +43,17 @@ function TopMenuBar() {
           onClick={handleItemClick}
         />
         <Menu.Item name='logout' onClick={context.logout} />
+        <Menu.Item
+          id='cart-image'
+          name='cart'
+          active={activeItem === 'cart'}
+          onClick={handleItemClick}
+        >
+          <img src='/food.svg' />
+          <span className='item-count'>0</span>
+        </Menu.Item>
       </Menu.Menu>
+      {hidden ? null : <CartDropdown />}
     </Menu>
   ) : (
     <Menu pointing secondary size='massive' color='teal'>

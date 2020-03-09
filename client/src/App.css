@@ -13,3 +13,37 @@
 .ui.red.buttons .button:focus {
   background-color: #db2828;
 }
+/* Submit button from home */
+.ui.form .field:last-child,
+.ui.form .fields:last-child .field {
+  margin-bottom: 15px;
+}
+
+#cart-image {
+  padding-bottom: 4px;
+  position: relative;
+}
+.item-count {
+  position: absolute;
+  font-size: 12px;
+  left: 39px;
+  top: 25px;
+}
+
+.cart-dropdown {
+  position: absolute;
+  width: 240px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid black;
+  background-color: white;
+  top: 71px;
+  right: 364px;
+  z-index: 5;
+}
+
+.cart-dropdown .button {
+  margin-top: auto;
+}

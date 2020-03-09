@@ -5,6 +5,7 @@ import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import LikeButton from '../components/LikeButton';
 import DeleteMealButton from '../components/DeleteMealButton';
+import PurchaseMealButton from '../components/PurchaseMealButton';
 import PopupUtil from '../utils/PopupUtil';
 
 function MealCard({
@@ -55,6 +56,9 @@ function MealCard({
         </PopupUtil>
 
         {user && user.username === username && <DeleteMealButton mealId={id} />}
+        {user && user.username !== username && (
+          <PurchaseMealButton mealId={id} />
+        )}
         {/* <Button as='div' labelPosition='left' floated='right'>
           <Label basic color='green' pointing='right'>
             Buy
