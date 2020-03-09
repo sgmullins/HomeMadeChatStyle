@@ -17,6 +17,7 @@ import moment from 'moment';
 import LikeButton from '../components/LikeButton';
 import { AuthContext } from '../context/auth';
 import DeleteMealButton from '../components/DeleteMealButton';
+import PurchaseMealButton from '../components/PurchaseMealButton';
 import PopupUtil from '../utils/PopupUtil';
 
 export default function SingleMeal(props) {
@@ -92,7 +93,7 @@ export default function SingleMeal(props) {
                     onClick={() => console.log('comment on meal')}
                   >
                     <Button basic color='blue'>
-                      <Icon name='comments' />
+                      <Icon name='comments' style={{ fontSize: '20px' }} />
                     </Button>
                     <Label basic color='blue' pointing='left'>
                       {commentCount}
@@ -101,6 +102,9 @@ export default function SingleMeal(props) {
                 </PopupUtil>
                 {user && user.username === username && (
                   <DeleteMealButton mealId={id} callback={deleteMealCallback} />
+                )}
+                {user && user.username !== username && (
+                  <PurchaseMealButton mealId={id} />
                 )}
               </Card.Content>
             </Card>
