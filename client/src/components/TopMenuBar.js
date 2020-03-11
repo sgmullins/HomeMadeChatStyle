@@ -4,13 +4,18 @@ import { Link } from 'react-router-dom';
 
 import CartDropdown from './CartDropdown';
 import { AuthContext } from '../context/auth';
+import { CartContext } from '../context/shoppingCart';
 
 function TopMenuBar() {
   const context = useContext(AuthContext);
+  const {
+    state: { cartItems },
+  } = useContext(CartContext);
   const pathname = window.location.pathname;
   const path = pathname === '/' ? 'home' : pathname.substr(1);
   const [activeItem, setActiveItem] = useState(path);
   const [hidden, setHidden] = useState(true);
+  console.log('from topmenu', cartItems);
 
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
@@ -53,7 +58,7 @@ function TopMenuBar() {
           <span className='item-count'>0</span>
         </Menu.Item>
       </Menu.Menu>
-      {hidden ? null : <CartDropdown />}
+      {hidden ? null : <CartDropdown cartItems={cartItems} />}
     </Menu>
   ) : (
     <Menu pointing secondary size='massive' color='teal'>

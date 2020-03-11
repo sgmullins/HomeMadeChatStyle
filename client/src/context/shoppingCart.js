@@ -5,18 +5,38 @@ const initialState = {
   cartItems: [],
 };
 
-const CartContext = createContext({
+export const CartContext = createContext({
   cartItems: [],
   addProduct: meadlId => [],
   removeProduct: mealId => [],
 });
 
-const cartReducer = (state, action) => {
+const addItemsToCart = (cartItems, cartItemToAdd) => {
+  console.log(
+    'from shopping cart util additem line 15',
+    cartItems,
+    cartItemToAdd,
+  );
+  const existingCartItem = cartItems.find(
+    cartItem => cartItem.id === cartItemToAdd.id,
+  );
+  if (existingCartItem) {
+    return cartItems.map(cartItem =>
+      cartItem.id === cartItemToAdd.id
+        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+        : cartItem,
+    );
+  }
+  //no existing item, add item to cart and attach new quantity property to it
+  return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
+};
+
+export const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_ITEM':
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload],
+        cartItems: addItemsToCart(state.cartItems, action.payload),
       };
     case 'REMOVE_ITEM':
       return {
@@ -28,29 +48,30 @@ const cartReducer = (state, action) => {
   }
 };
 
-function CartProvider(props) {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+// function CartProvider(props) {
+//   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  function addProduct(mealId) {
-    dispatch({
-      type: 'ADD_ITEM',
-      payload: mealData,
-    });
-  }
+//   function addProduct(mealId) {
+//     console.log('addproduct dispatch');
+//     dispatch({
+//       type: 'ADD_ITEM',
+//       payload: mealId,
+//     });
+//   }
 
-  function removeProduct(mealId) {
-    dispatch({
-      type: 'REMOVE_ITEM',
-      payload: mealId,
-    });
-  }
+//   function removeProduct(mealId) {
+//     dispatch({
+//       type: 'REMOVE_ITEM',
+//       payload: mealId,
+//     });
+//   }
 
-  return (
-    <CartContext.Provider
-      value={{ cartItems: state.cartItems, addProduct, removeProduct }}
-      {...props}
-    />
-  );
-}
+//   return (
+//     <CartContext.Provider
+//       value={{ cartItems: state.cartItems, addProduct, removeProduct }}
+//       {...props}
+//     />
+//   );
+// }
 
-export { CartContext, CartProvider };
+// export { CartContext, CartProvider };

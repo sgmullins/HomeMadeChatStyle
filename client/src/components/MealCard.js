@@ -3,12 +3,15 @@ import { Card, Image, Icon, Label, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
+import { CartContext } from '../context/shoppingCart';
+
 import LikeButton from '../components/LikeButton';
 import DeleteMealButton from '../components/DeleteMealButton';
 import PurchaseMealButton from '../components/PurchaseMealButton';
 import PopupUtil from '../utils/PopupUtil';
 
 function MealCard({
+  meal,
   meal: {
     id,
     title,
@@ -23,6 +26,7 @@ function MealCard({
   },
 }) {
   const { user } = useContext(AuthContext);
+  const { cartItems, addProduct } = useContext(CartContext);
 
   return (
     <Card fluid>
@@ -57,7 +61,7 @@ function MealCard({
 
         {user && user.username === username && <DeleteMealButton mealId={id} />}
         {user && user.username !== username && (
-          <PurchaseMealButton mealId={id} />
+          <PurchaseMealButton mealData={meal} />
         )}
         {/* <Button as='div' labelPosition='left' floated='right'>
           <Label basic color='green' pointing='right'>

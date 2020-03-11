@@ -104,7 +104,7 @@ export default function SingleMeal(props) {
                   <DeleteMealButton mealId={id} callback={deleteMealCallback} />
                 )}
                 {user && user.username !== username && (
-                  <PurchaseMealButton mealId={id} />
+                  <PurchaseMealButton mealData={data.getMeal} />
                 )}
               </Card.Content>
             </Card>
