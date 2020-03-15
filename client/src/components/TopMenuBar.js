@@ -58,7 +58,13 @@ function TopMenuBar() {
           <span className='item-count'>0</span>
         </Menu.Item>
       </Menu.Menu>
-      {hidden ? null : <CartDropdown cartItems={cartItems} />}
+      {hidden ? null : (
+        <CartDropdown
+          cartItems={cartItems}
+          handleItemClick={handleItemClick}
+          name='cart'
+        />
+      )}
     </Menu>
   ) : (
     <Menu pointing secondary size='massive' color='teal'>

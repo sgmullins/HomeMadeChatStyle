@@ -1,10 +1,11 @@
 import React, { useContext, useState, useReducer } from 'react';
 import { Button } from 'semantic-ui-react';
 import CartItem from './CartItem';
+import { Link, withRouter } from 'react-router-dom';
 import { CartContext, cartReducer } from '../context/shoppingCart';
 
 //TODO:Need cart reducer here to access state
-function CartDropdown({ cartItems }) {
+function CartDropdown({ cartItems, history, handleItemClick, name }) {
   // const { cartItems } = useContext(CartContext);
   console.log('from cartDrop', cartItems);
 
@@ -15,11 +16,18 @@ function CartDropdown({ cartItems }) {
           <CartItem key={item.id} item={item} />
         ))}
       </div>
-      <Button color='teal' className='button'>
+      <Button
+        color='teal'
+        className='button'
+        onClick={e => {
+          history.push('/checkout');
+          handleItemClick(e, { name });
+        }}
+      >
         Go To Cart
       </Button>
     </div>
   );
 }
 
-export default CartDropdown;
+export default withRouter(CartDropdown);

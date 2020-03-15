@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import SingleMeal from './pages/SingleMeal';
+import Checkout from './pages/Checkout';
 import TopMenuBar from './components/TopMenuBar';
 import Profile from './pages/Profile';
 import 'semantic-ui-css/semantic.min.css';
@@ -31,6 +32,7 @@ function App() {
             <AuthRoute exact path='/login' component={Login} />
             <AuthRoute exact path='/register' component={Register} />
             <Route exact path={'/meals/:mealId'} component={SingleMeal} />
+            <Route exact path={'/checkout'} component={Checkout} />
           </Container>
         </Router>
       </CartContext.Provider>
