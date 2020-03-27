@@ -31,6 +31,12 @@ const addItemsToCart = (cartItems, cartItemToAdd) => {
   return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
 };
 
+// export const cartItemCount = cartItems => {
+//   cartItems.reduce((accumulatedQuantity, cartItem) => {
+//     return accumulatedQuantity + cartItem.quantity;
+//   }, 0);
+// };
+
 export const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_ITEM':
