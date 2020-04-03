@@ -15,15 +15,17 @@ import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
 //context work
-import { CartContext, cartReducer } from './context/shoppingCart';
+// import { CartContext, cartReducer } from './context/shoppingCart';
+import { CartProvider } from './provider/CartProvider/cart-provider';
 
 function App() {
-  const initialState = useContext(CartContext);
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  // const initialState = useContext(CartContext);
+  // const [state, dispatch] = useReducer(cartReducer, initialState);
 
   return (
     <AuthProvider>
-      <CartContext.Provider value={{ state, dispatch }}>
+      {/* <CartContext.Provider value={{ state, dispatch }}> */}
+      <CartProvider>
         <Router>
           <Container>
             <TopMenuBar />
@@ -35,7 +37,8 @@ function App() {
             <Route exact path={'/checkout'} component={Checkout} />
           </Container>
         </Router>
-      </CartContext.Provider>
+      </CartProvider>
+      {/* </CartContext.Provider> */}
     </AuthProvider>
   );
 }

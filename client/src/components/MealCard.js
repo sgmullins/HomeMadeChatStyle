@@ -3,8 +3,7 @@ import { Card, Image, Icon, Label, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { AuthContext } from '../context/auth';
-import { CartContext } from '../context/shoppingCart';
-
+// import { CartContext } from '../context/shoppingCart';
 import LikeButton from '../components/LikeButton';
 import DeleteMealButton from '../components/DeleteMealButton';
 import PurchaseMealButton from '../components/PurchaseMealButton';
@@ -26,7 +25,7 @@ function MealCard({
   },
 }) {
   const { user } = useContext(AuthContext);
-  const { cartItems, addProduct } = useContext(CartContext);
+  // const { cartItems, addProduct } = useContext(CartContext);
 
   return (
     <Card fluid>

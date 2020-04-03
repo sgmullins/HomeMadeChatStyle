@@ -2,26 +2,24 @@ import React, { useContext, useState, useReducer } from 'react';
 import { Button } from 'semantic-ui-react';
 import CartItem from './CartItem';
 import { Link, withRouter } from 'react-router-dom';
-import { CartContext, cartReducer } from '../context/shoppingCart';
-
+import { CartContext } from '../provider/CartProvider/cart-provider';
 //TODO:Need cart reducer here to access state
-function CartDropdown({ cartItems, history, handleItemClick, name }) {
-  // const { cartItems } = useContext(CartContext);
+function CartDropdown({ history }) {
+  const { cartItems, toggleHidden } = useContext(CartContext);
   console.log('from cartDrop', cartItems);
-
   return (
     <div className='cart-dropdown'>
       <div className='cart-items'>
-        {cartItems.map(item => (
-          <CartItem key={item.id} item={item} />
+        {cartItems.map(cartItem => (
+          <CartItem key={cartItem.id} item={cartItem} />
         ))}
       </div>
       <Button
         color='teal'
         className='button'
-        onClick={e => {
+        onClick={() => {
           history.push('/checkout');
-          handleItemClick(e, { name });
+          toggleHidden();
         }}
       >
         Go To Cart
