@@ -7,8 +7,11 @@ import { AuthContext } from '../context/auth';
 // import { CartContext } from '../context/shoppingCart';
 import { CartContext } from '../provider/CartProvider/cart-provider';
 function TopMenuBar() {
+  //TODO:move cart icon and functionality into own component
   const context = useContext(AuthContext);
-  const { hidden, setHidden, toggleHidden } = useContext(CartContext);
+  const { hidden, setHidden, toggleHidden, cartItemsCount } = useContext(
+    CartContext,
+  );
   // const {
   //   state: { cartItems },
   // } = useContext(CartContext);
@@ -56,7 +59,7 @@ function TopMenuBar() {
           onClick={handleItemClick}
         >
           <img src='/food.svg' />
-          <span className='item-count'>0</span>
+          <span className='item-count'>{cartItemsCount}</span>
         </Menu.Item>
       </Menu.Menu>
       {hidden ? null : (

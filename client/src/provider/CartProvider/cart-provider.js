@@ -1,5 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { addItemToCart, removeItemFromCart } from './cart-utils';
+import {
+  addItemToCart,
+  removeItemFromCart,
+  getCartItemCount,
+  filterItemFromCart,
+} from './cart-utils';
 
 export const CartContext = createContext({
   hidden: true,
@@ -7,12 +12,15 @@ export const CartContext = createContext({
   cartItems: [],
   addItem: () => {},
   removeItem: () => {},
+  clearItemFromCart: () => {},
+  cartItemsCount: 0,
 });
 
 export const CartProvider = ({ children }) => {
   const persistedCart = JSON.parse(window.localStorage.getItem('cart')) || [];
   const [hidden, setHidden] = useState(true);
   const [cartItems, setCartItems] = useState(persistedCart);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
   const addItem = item => {
     setCartItems(addItemToCart(cartItems, item));
@@ -20,6 +28,9 @@ export const CartProvider = ({ children }) => {
   const removeItem = item => {
     setCartItems(removeItemFromCart(cartItems, item));
   };
+  const clearItemFromCart = item =>
+    setCartItems(filterItemFromCart(cartItems, item));
+
   const toggleHidden = () => {
     setHidden(!hidden);
   };
@@ -27,6 +38,9 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     window.localStorage.setItem('cart', JSON.stringify(cartItems));
   });
+  useEffect(() => {
+    setCartItemsCount(getCartItemCount(cartItems));
+  }, [cartItems]);
 
   return (
     <CartContext.Provider
@@ -37,6 +51,8 @@ export const CartProvider = ({ children }) => {
         addItem,
         removeItem,
         cartItems,
+        cartItemsCount,
+        clearItemFromCart,
       }}
     >
       {children}

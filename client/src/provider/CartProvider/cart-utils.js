@@ -29,3 +29,12 @@ export const removeItemFromCart = (cartItems, cartItemToRemove) => {
       : cartItem,
   );
 };
+
+export const getCartItemCount = cartItems => {
+  return cartItems.reduce((accumulatedQuantity, cartItem) => {
+    return accumulatedQuantity + cartItem.quantity;
+  }, 0);
+};
+
+export const filterItemFromCart = (cartItems, item) =>
+  cartItems.filter(cartItem => cartItem.id !== item.id);

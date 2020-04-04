@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from '../provider/CartProvider/cart-provider';
+import { CheckOutItem } from '../components/CheckOutItem';
 
 function Checkout() {
-  return <div>This is the Checkout page</div>;
+  const { cartItems } = useContext(CartContext);
+  console.log(cartItems);
+  return (
+    <div>
+      {cartItems.map(cartItem => (
+        <CheckOutItem key={cartItem.id} cartItem={cartItem} />
+      ))}
+      checkout
+    </div>
+  );
 }
 
 export default Checkout;
